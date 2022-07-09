@@ -1,0 +1,111 @@
+swagger: "2.0"
+info:
+  description: "This is stock streaming service."
+  version: "1.0.0"
+  title: "Stock Streaming Service"
+  contact:
+    email: "piotr@email.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "stock.com"
+basePath: "/v1"
+tags:
+- name: "stock"
+  description: "Everything about stocks"
+schemes:
+- "https"
+- "http"
+paths:
+  /stock:
+    post:
+      tags:
+      - "stock"
+      summary: "Add a stock to streaming pipeline"
+      description: ""
+      operationId: "addStock"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Stock object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Stock"
+      responses:
+        "405":
+          description: "Invalid input"
+    get:
+      tags:
+      - "stock"
+      summary: "Finds stocks by ticker, exchange or price"
+      operationId: "stock"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ticker"
+        type: string
+        in: "query"
+        description: "Report of the price of certain securities"
+        required: false
+      - name: "stockType"
+        type: string
+        in: "query"
+        description: "Type of the stock"
+        required: false
+      - name: "exchange"
+        type: string
+        in: "query"
+        description: "Stock exchange official shortcut"
+        required: false
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Stock"
+        "400":
+          description: "Invalid filter value"
+definitions:
+  Stock:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      ticker:
+        type: "string"
+      stockType:
+        type: "string"
+      exchange:
+        type: "string"
+      price:
+        type: "number"
+        format: "decimal"
+      currency:
+        type: "string"
+      volume:
+        type: "integer"
+        format: "int64"
+      stockTimestamp:
+        type: string
+        format: 'date-time'
+    xml:
+      name: "Stock"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
