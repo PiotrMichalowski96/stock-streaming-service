@@ -1,10 +1,10 @@
 package com.piotr.stock.streaming.mapper;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.piotr.stock.streaming.entity.StockEntity;
 import com.piotr.stock.streaming.rest.model.Stock;
+import com.piotr.stock.streaming.util.StockBuilder;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -34,15 +34,15 @@ class StockMapperTest {
     OffsetDateTime stockTimestamp = LocalDateTime.of(2022, 2, 11, 20, 52, 48)
         .atZone(zone).toOffsetDateTime();
 
-    Stock stock = new Stock();
-    stock.setTicker("BTC/USD");
-    stock.setQuoteType("Digital Currency");
-    stock.setStockMarket("Binance");
-    stock.setPrice(BigDecimal.valueOf(43993.0));
-    stock.setCurrency("US Dollar");
-    stock.setVolume(72110L);
-    stock.setStockTimestamp(stockTimestamp);
-    return stock;
+    return new StockBuilder()
+        .withTicker("BTC/USD")
+        .withQuoteType("Digital Currency")
+        .withStockMarket("Binance")
+        .withPrice(BigDecimal.valueOf(43993.0))
+        .withCurrency("US Dollar")
+        .withVolume(72110L)
+        .withStockTimestamp(stockTimestamp)
+        .build();
   }
 
   private StockEntity createStockEntity() {
