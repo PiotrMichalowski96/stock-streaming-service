@@ -152,7 +152,7 @@
       <plugin>
         <groupId>org.openapitools</groupId>
         <artifactId>openapi-generator-maven-plugin</artifactId>
-        <version>6.0.0</version>
+        <version>5.4.0</version>
         <executions>
           <execution>
             <goals>
@@ -164,10 +164,7 @@
               <modelPackage>com.piotr.stock.streaming.rest.model</modelPackage>
               <apiPackage>com.piotr.stock.streaming.rest.handler</apiPackage>
               <configOptions>
-                <sourceFolder>openapi-tmp</sourceFolder>
                 <delegatePattern>true</delegatePattern>
-                <output>${project.build.directory}/generated-sources/openapi</output>
-                <java8>true</java8>
                 <serializationLibrary>jackson</serializationLibrary>
                 <openApiNullable>false</openApiNullable>
               </configOptions>

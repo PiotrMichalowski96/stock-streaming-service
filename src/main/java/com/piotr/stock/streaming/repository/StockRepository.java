@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 public class StockRepository {
 
   private static final Class<StockEntity> ENTITY_CLASS = StockEntity.class;
-  private static final int LIMIT = 2;
+  private static final int LIMIT = 10;
 
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

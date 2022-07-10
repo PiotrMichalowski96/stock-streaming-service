@@ -61,7 +61,7 @@ class RetrieveStockProcessorTest {
     //given
     ApiRequestParams apiRequestParams = new ApiRequestParams();
     StockQueryInfo stockQueryInfo = new StockQueryInfo(apiRequestParams);
-    String expectedSql = "SELECT * FROM STOCK LIMIT 2";
+    String expectedSql = "SELECT * FROM STOCK LIMIT 10";
 
     //when
     retrieveStockProcessor.process(stockQueryInfo);
