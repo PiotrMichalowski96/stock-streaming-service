@@ -24,7 +24,7 @@ class StockApiDelegateIntTest {
   private StockApiDelegate stockApiDelegate;
 
   @Test
-  void shouldRetrieveStocks() {
+  void shouldGetStockByQueryParams() {
     //given
     ZoneId zone = ZoneId.of("Europe/Warsaw");
     OffsetDateTime stockTimestamp = LocalDateTime.of(2022, 2, 11, 20, 52, 48)
@@ -51,5 +51,33 @@ class StockApiDelegateIntTest {
     assertThat(status).isEqualTo(HttpStatus.OK);
     assertThat(stocks).hasSize(1);
     assertThat(stocks.get(0)).usingRecursiveComparison().isEqualTo(expectedStock);
+  }
+
+  @Test
+  void shouldGetStocksLimited() {
+    //given
+    int limitSize = 10;
+
+    //when
+    ResponseEntity<List<Stock>> response = stockApiDelegate.stock(null, null, null);
+    HttpStatus status = response.getStatusCode();
+    List<Stock> stocks = response.getBody();
+
+    //then
+    assertThat(status).isEqualTo(HttpStatus.OK);
+    assertThat(stocks).hasSize(limitSize);
+  }
+
+  @Test
+  void shouldGetNoContent() {
+    //given
+    String wrongTicker = "AABBCC";
+
+    //when
+    ResponseEntity<List<Stock>> response = stockApiDelegate.stock(wrongTicker, null, null);
+    HttpStatus status = response.getStatusCode();
+
+    //then
+    assertThat(status).isEqualTo(HttpStatus.NO_CONTENT);
   }
 }
