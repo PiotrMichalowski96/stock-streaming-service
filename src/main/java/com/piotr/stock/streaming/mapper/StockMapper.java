@@ -20,9 +20,25 @@ public abstract class StockMapper {
 
   public abstract List<Stock> toStockDtoList(List<StockEntity> stockEntityList);
 
+  @Mapping(target = "stockType", source = "quoteType")
+  @Mapping(target = "exchange", source = "stockMarket")
+  @Mapping(target = "stockTimestamp", source = "stockTimestamp", qualifiedByName = "offsetDateToLocalDateMapper")
+  public abstract StockEntity toStockEntity(Stock stock);
+
   @Named("localDateToOffsetDateMapper")
   protected OffsetDateTime localDateToOffsetDateMapper(LocalDateTime localDateTime) {
+    if (localDateTime == null) {
+      return null;
+    }
     ZoneId zone = ZoneId.of("Europe/Warsaw");
     return localDateTime.atZone(zone).toOffsetDateTime();
+  }
+
+  @Named("offsetDateToLocalDateMapper")
+  protected LocalDateTime offsetDateToLocalDateMapper(OffsetDateTime offsetDateTime) {
+    if (offsetDateTime == null) {
+      return null;
+    }
+    return offsetDateTime.toLocalDateTime();
   }
 }

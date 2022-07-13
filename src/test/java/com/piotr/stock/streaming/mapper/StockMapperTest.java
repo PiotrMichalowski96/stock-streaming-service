@@ -10,18 +10,19 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class StockMapperTest {
 
   private final StockMapper stockMapper = new StockMapperImpl();
 
-  @Test
-  void shouldMapEntityToDto() {
-    //given
-    StockEntity stockEntity = createStockEntity();
-    Stock expectedStockDto = createStockDto();
-
+  @ParameterizedTest
+  @MethodSource("provideDtoAndEntity")
+  void shouldMapEntityToDto(Stock expectedStockDto, StockEntity stockEntity) {
+    //given input
     //when
     Stock actualStockDto = stockMapper.toStockDto(stockEntity);
 
@@ -29,11 +30,32 @@ class StockMapperTest {
     assertThat(actualStockDto).usingRecursiveComparison().isEqualTo(expectedStockDto);
   }
 
-  private Stock createStockDto() {
+  @ParameterizedTest
+  @MethodSource("provideDtoAndEntity")
+  void shouldMapDtoToEntity(Stock stockDto, StockEntity expectedStockEntity) {
+    //given input
+    //when
+    StockEntity actualStockEntity = stockMapper.toStockEntity(stockDto);
+
+    //then
+    assertThat(actualStockEntity).usingRecursiveComparison()
+        .ignoringFields("id")
+        .isEqualTo(expectedStockEntity);
+  }
+
+  private static Stream<Arguments> provideDtoAndEntity() {
+    LocalDateTime stockLocalDateTime = LocalDateTime.of(2022, 2, 11, 20, 52, 48);
     ZoneId zone = ZoneId.of("Europe/Warsaw");
-    OffsetDateTime stockTimestamp = LocalDateTime.of(2022, 2, 11, 20, 52, 48)
+    OffsetDateTime stockOffsetDateTime = LocalDateTime.of(2022, 2, 11, 20, 52, 48)
         .atZone(zone).toOffsetDateTime();
 
+    return Stream.of(
+        Arguments.of(createStockDto(stockOffsetDateTime), createStockEntity(stockLocalDateTime)),
+        Arguments.of(createStockDto(null), createStockEntity(null))
+    );
+  }
+
+  private static Stock createStockDto(OffsetDateTime stockTimestamp) {
     return new StockBuilder()
         .withTicker("BTC/USD")
         .withQuoteType("Digital Currency")
@@ -45,8 +67,7 @@ class StockMapperTest {
         .build();
   }
 
-  private StockEntity createStockEntity() {
-    LocalDateTime stockTimestamp = LocalDateTime.of(2022, 2, 11, 20, 52, 48);
+  private static StockEntity createStockEntity(LocalDateTime stockTimestamp) {
     return StockEntity.builder()
         .id(1L)
         .ticker("BTC/USD")
