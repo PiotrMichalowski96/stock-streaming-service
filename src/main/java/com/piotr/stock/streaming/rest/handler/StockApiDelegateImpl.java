@@ -4,7 +4,9 @@ import com.piotr.stock.streaming.model.ApiRequestParams;
 import com.piotr.stock.streaming.repository.StockQueryInfo;
 import com.piotr.stock.streaming.rest.model.Stock;
 import com.piotr.stock.streaming.route.RetrieveStockApiRoute;
+import com.piotr.stock.streaming.route.SaveStockApiRoute;
 import com.piotr.stock.streaming.route.caller.RetrieveStockRouteCaller;
+import com.piotr.stock.streaming.route.caller.SaveStockRouteCaller;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Produce;
@@ -19,10 +21,19 @@ public class StockApiDelegateImpl implements StockApiDelegate {
   @Produce(RetrieveStockApiRoute.ROUTE_FROM)
   protected RetrieveStockRouteCaller retrieveStockRouteCaller;
 
+  @Produce(SaveStockApiRoute.ROUTE_FROM)
+  protected SaveStockRouteCaller saveStockRouteCaller;
+
   @Override
-  public ResponseEntity<Void> addStock(Stock body) {
-    //TODO: support POST method
-    return StockApiDelegate.super.addStock(body);
+  public ResponseEntity<Stock> addStock(Stock body) {
+
+    logger.debug("Stock to save: {}", body);
+
+    Stock savedStock = saveStockRouteCaller.callRoute(body);
+
+    logger.debug("Saved stock: {}", savedStock);
+
+    return ResponseEntity.ok(savedStock);
   }
 
   @Override

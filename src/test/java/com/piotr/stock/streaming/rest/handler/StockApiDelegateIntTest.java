@@ -2,9 +2,12 @@ package com.piotr.stock.streaming.rest.handler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.piotr.stock.streaming.entity.StockEntity;
+import com.piotr.stock.streaming.repository.StockProducer;
 import com.piotr.stock.streaming.rest.model.Stock;
 import com.piotr.stock.streaming.util.StockBuilder;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -22,6 +25,9 @@ class StockApiDelegateIntTest {
 
   @Autowired
   private StockApiDelegate stockApiDelegate;
+
+  @Autowired
+  private StockProducer stockProducer;
 
   @Test
   void shouldGetStockByQueryParams() {
@@ -79,5 +85,43 @@ class StockApiDelegateIntTest {
 
     //then
     assertThat(status).isEqualTo(HttpStatus.NO_CONTENT);
+  }
+
+  @Test
+  void shouldSaveStock() {
+    //given
+    LocalDateTime localStockTimestamp = LocalDateTime.of(2022, 2, 11, 20, 52, 48);
+    ZoneId zone = ZoneId.of("Europe/Warsaw");
+    OffsetDateTime offsetStockTimestamp = localStockTimestamp.atZone(zone).toOffsetDateTime();
+
+    Stock stockToSave = new StockBuilder()
+        .withTicker("BTC/EUR")
+        .withQuoteType("Digital Currency")
+        .withStockMarket("Binance")
+        .withPrice(new BigDecimal("19695.0000"))
+        .withCurrency("EUR")
+        .withVolume(66110L)
+        .withStockTimestamp(offsetStockTimestamp)
+        .build();
+
+    StockEntity expectedSavedStock = StockEntity.builder()
+        .id(12L)
+        .ticker(stockToSave.getTicker())
+        .stockType(stockToSave.getQuoteType())
+        .exchange(stockToSave.getStockMarket())
+        .price(stockToSave.getPrice())
+        .currency(stockToSave.getCurrency())
+        .volume(BigInteger.valueOf(stockToSave.getVolume()))
+        .stockTimestamp(localStockTimestamp)
+        .build();
+
+    //when
+    ResponseEntity<Stock> stockResponse = stockApiDelegate.addStock(stockToSave);
+    StockEntity actualSavedStock = stockProducer.findById(expectedSavedStock.getId()).get();
+
+    //then
+    assertThat(stockResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(stockResponse.getBody()).usingRecursiveComparison().isEqualTo(stockToSave);
+    assertThat(actualSavedStock).usingRecursiveComparison().isEqualTo(expectedSavedStock);
   }
 }

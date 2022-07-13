@@ -36,6 +36,10 @@ paths:
         schema:
           $ref: "#/definitions/Stock"
       responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Stock"
         "405":
           description: "Invalid input"
     get:
