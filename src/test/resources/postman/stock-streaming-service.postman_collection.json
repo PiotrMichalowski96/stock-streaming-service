@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "052909dc-ed31-4348-847a-a6c35e95f426",
+		"name": "stock-streaming-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all stocks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/stock",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get stock by filters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/stock?ticker=BTC/USD&stockType=Digital Currency&exchange=Binance",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"stock"
+					],
+					"query": [
+						{
+							"key": "ticker",
+							"value": "BTC/USD"
+						},
+						{
+							"key": "stockType",
+							"value": "Digital Currency"
+						},
+						{
+							"key": "exchange",
+							"value": "Binance"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add stock",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ticker\": \"BTC/EUR\",\r\n    \"quoteType\": \"Digital Currency\",\r\n    \"stockMarket\": \"Binance\",\r\n    \"price\": 19695.0000,\r\n    \"currency\": \"EUR\",\r\n    \"volume\": 66110,\r\n    \"stockTimestamp\": \"2022-07-11T22:52:48+01:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/stock",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"stock"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

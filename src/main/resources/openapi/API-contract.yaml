@@ -27,7 +27,7 @@ paths:
       consumes:
       - "application/json"
       produces:
-      - "application/xml"
+      - "application/json"
       parameters:
       - in: "body"
         name: "body"
