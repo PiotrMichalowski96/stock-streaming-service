@@ -20,6 +20,7 @@ public abstract class StockMapper {
 
   public abstract List<Stock> toStockDtoList(List<StockEntity> stockEntityList);
 
+  @Mapping(target = "id", expression = "java(Long.valueOf(stock.hashCode()))")
   @Mapping(target = "stockType", source = "quoteType")
   @Mapping(target = "exchange", source = "stockMarket")
   @Mapping(target = "stockTimestamp", source = "stockTimestamp", qualifiedByName = "offsetDateToLocalDateMapper")

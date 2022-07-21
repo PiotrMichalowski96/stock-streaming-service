@@ -1,0 +1,8 @@
+#Run kafka consumer to check messages on topic
+bin\windows\kafka-console-consumer.bat --bootstrap-server 0.0.0.0:29092 --topic stock_temporary--from-beginning --property print.key=true
+
+#Log into KSQL DB client to manually run queries in KSQL DB
+docker-compose exec ksqldb-cli ksql http://ksqldb-server:8088
+
+#Check logs in KSQL DB server
+docker-compose logs -f ksqldb-server

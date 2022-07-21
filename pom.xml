@@ -25,7 +25,7 @@
     <ksqldb.version>7.1.1</ksqldb.version>
     <mapstruct.verstion>1.5.1.Final</mapstruct.verstion>
     <springdoc.version>1.6.9</springdoc.version>
-    <project.lombok.version>1.18.22</project.lombok.version>
+    <project.lombok.version>1.18.24</project.lombok.version>
   </properties>
 
   <dependencies>
@@ -38,10 +38,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jdbc</artifactId>
-    </dependency>
 
     <!-- Camel dependencies -->
     <dependency>
@@ -49,11 +45,21 @@
       <artifactId>camel-spring-boot-starter</artifactId>
       <version>${spring.camel.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.camel.springboot</groupId>
+      <artifactId>camel-kafka-starter</artifactId>
+      <version>${spring.camel.version}</version>
+    </dependency>
 
     <!-- ksqlDB dependencies-->
     <dependency>
       <groupId>io.confluent.ksql</groupId>
       <artifactId>ksqldb-api-client</artifactId>
+      <version>${ksqldb.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.confluent.ksql</groupId>
+      <artifactId>ksqldb-udf</artifactId>
       <version>${ksqldb.version}</version>
     </dependency>
 
@@ -82,11 +88,6 @@
     </dependency>
 
     <!-- Test dependencies -->
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>

@@ -1,41 +1,35 @@
 package com.piotr.stock.streaming.repository;
 
-import com.piotr.stock.streaming.entity.StockEntity;
+import com.piotr.stock.streaming.ksql.KsqlDbDriver;
+import io.confluent.ksql.api.client.Row;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class StockRepository {
 
-  private static final Class<StockEntity> ENTITY_CLASS = StockEntity.class;
   private static final int LIMIT = 10;
 
-  private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+  @Value("${kafka.ksql.table}")
+  private final String ksqlTable;
+  private final KsqlDbDriver ksqlDbDriver;
 
-  public List<StockEntity> findStockList(StockQueryInfo stockQueryInfo) {
+  public List<Row> findStockRows(StockQueryInfo stockQueryInfo) {
     Map<String, String> params = stockQueryInfo.getQueryParams();
-    String sqlQuery = new SqlQueryBuilder()
+    String sqlQuery = new SqlQueryBuilder(ksqlTable)
         .withParameters(params)
         .build();
-    SqlParameterSource sqlParameterSource = new MapSqlParameterSource(params);
-    BeanPropertyRowMapper<StockEntity> propertyRowMapper = new BeanPropertyRowMapper<>(ENTITY_CLASS);
-    return namedParameterJdbcTemplate.query(sqlQuery, sqlParameterSource, propertyRowMapper);
+    return ksqlDbDriver.findByQuery(sqlQuery);
   }
 
-  public List<StockEntity> findStockLimited() {
-    String sqlQuery = new SqlQueryBuilder()
+  public List<Row> findStockRowsLimited() {
+    String sqlQuery = new SqlQueryBuilder(ksqlTable)
         .withLimit(LIMIT)
         .build();
-    BeanPropertyRowMapper<StockEntity> propertyRowMapper = new BeanPropertyRowMapper<>(ENTITY_CLASS);
-    return namedParameterJdbcTemplate.query(sqlQuery, propertyRowMapper);
+    return ksqlDbDriver.findByQuery(sqlQuery);
   }
 }

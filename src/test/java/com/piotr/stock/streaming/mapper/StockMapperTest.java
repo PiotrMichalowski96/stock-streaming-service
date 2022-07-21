@@ -1,12 +1,11 @@
 package com.piotr.stock.streaming.mapper;
 
+import static com.piotr.stock.streaming.util.TestDataFactoryUtil.createStockDto;
+import static com.piotr.stock.streaming.util.TestDataFactoryUtil.createStockEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.piotr.stock.streaming.entity.StockEntity;
 import com.piotr.stock.streaming.rest.model.Stock;
-import com.piotr.stock.streaming.util.StockBuilder;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -38,9 +37,7 @@ class StockMapperTest {
     StockEntity actualStockEntity = stockMapper.toStockEntity(stockDto);
 
     //then
-    assertThat(actualStockEntity).usingRecursiveComparison()
-        .ignoringFields("id")
-        .isEqualTo(expectedStockEntity);
+    assertThat(actualStockEntity).usingRecursiveComparison().isEqualTo(expectedStockEntity);
   }
 
   private static Stream<Arguments> provideDtoAndEntity() {
@@ -50,33 +47,8 @@ class StockMapperTest {
         .atZone(zone).toOffsetDateTime();
 
     return Stream.of(
-        Arguments.of(createStockDto(stockOffsetDateTime), createStockEntity(stockLocalDateTime)),
-        Arguments.of(createStockDto(null), createStockEntity(null))
+        Arguments.of(createStockDto(stockOffsetDateTime), createStockEntity(123753267L, stockLocalDateTime)),
+        Arguments.of(createStockDto(null), createStockEntity(-1651435411L, null))
     );
-  }
-
-  private static Stock createStockDto(OffsetDateTime stockTimestamp) {
-    return new StockBuilder()
-        .withTicker("BTC/USD")
-        .withQuoteType("Digital Currency")
-        .withStockMarket("Binance")
-        .withPrice(BigDecimal.valueOf(43993.0))
-        .withCurrency("US Dollar")
-        .withVolume(72110L)
-        .withStockTimestamp(stockTimestamp)
-        .build();
-  }
-
-  private static StockEntity createStockEntity(LocalDateTime stockTimestamp) {
-    return StockEntity.builder()
-        .id(1L)
-        .ticker("BTC/USD")
-        .stockType("Digital Currency")
-        .exchange("Binance")
-        .price(BigDecimal.valueOf(43993.0))
-        .currency("US Dollar")
-        .volume(BigInteger.valueOf(72110L))
-        .stockTimestamp(stockTimestamp)
-        .build();
   }
 }
