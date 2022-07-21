@@ -12,6 +12,7 @@ public class RouteLogMessages {
   public static final String STEP_MAPPING_SAVED_ENTITY = "Mapping saved stock entity to DTO";
   public static final String STEP_MAPPING_DTO = "Mapping stock DTO to entity";
   public static final String STEP_SENDING_TO_KAFKA = "Sending to kafka topic";
+  public static final String STEP_SETTING_KAFKA_KEY = "Setting kafka key";
 
   public static String stepDoneMessage(String message) {
     return new StringBuilder()
