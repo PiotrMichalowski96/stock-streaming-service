@@ -10,25 +10,6 @@ kafka:
     table: stock_table
 
 ############################################################
-# DB properties
-############################################################
-spring:
-  h2:
-    console:
-      enabled: true
-      path: "/h2-console"
-  datasource:
-    hikari:
-      jdbc-url: jdbc:h2:mem:mydb
-      username: sa
-      password:
-      driver-class-name: org.h2.Driver
-  sql:
-    init:
-      platform: h2
-      schema-locations: classpath:db/schema-h2.sql
-
-############################################################
 # Logging
 ############################################################
 logging:
