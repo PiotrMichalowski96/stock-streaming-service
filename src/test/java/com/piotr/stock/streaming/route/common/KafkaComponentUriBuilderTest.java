@@ -17,7 +17,11 @@ class KafkaComponentUriBuilderTest {
     String expectedKafkaUri = "kafka:myStockTopic?brokers=localhost:9092"
         + "&zookeeperHost=localhost:2181"
         + "&valueSerializer=kafka.serializer.StringEncoder"
-        + "&keySerializer=kafka.serializer.LongEncoder";
+        + "&keySerializer=kafka.serializer.LongEncoder"
+        + "&additional-properties[transactional.id]=1234"
+        + "&additional-properties[enable.idempotence]=true"
+        + "&additional-properties[retries]=5"
+        + "&requestRequiredAcks=all";
 
     //when
     String actualKafkaUri = new KafkaComponentUriBuilder(topic)
@@ -25,6 +29,7 @@ class KafkaComponentUriBuilderTest {
         .withZookeeperHost(zookeeper)
         .withValueSerializer(stringSerializer)
         .withKeySerializer(longSerializer)
+        .withTransactionSupport()
         .build();
 
     //then

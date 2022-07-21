@@ -43,6 +43,7 @@ public class SaveStockApiRoute extends RouteBuilder {
         .withBroker(server)
         .withKeySerializer(LongSerializer.class.getCanonicalName())
         .withValueSerializer(StockSerializer.class.getCanonicalName())
+        .withTransactionSupport()
         .build();
   }
 
@@ -51,7 +52,6 @@ public class SaveStockApiRoute extends RouteBuilder {
     from(ROUTE_FROM)
         .routeId(ROUTE_ID)
         .setExchangePattern(ExchangePattern.InOnly)
-        .transacted()
         .id(STEP_START_SAVE)
         .log(LoggingLevel.INFO, logger, stepDoneMessage(STEP_START_SAVE))
 
