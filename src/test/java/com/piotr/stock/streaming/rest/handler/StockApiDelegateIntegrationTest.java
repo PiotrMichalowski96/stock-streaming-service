@@ -6,7 +6,6 @@ import com.piotr.stock.streaming.entity.StockEntity;
 import com.piotr.stock.streaming.rest.model.Stock;
 import com.piotr.stock.streaming.util.StockBuilder;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -23,7 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 @Disabled()
 @SpringBootTest
 @ActiveProfiles("TEST")
-class StockApiDelegateIntTest {
+class StockApiDelegateIntegrationTest {
 
   @Autowired
   private StockApiDelegate stockApiDelegate;
@@ -110,7 +109,7 @@ class StockApiDelegateIntTest {
         .exchange(stockToSave.getStockMarket())
         .price(stockToSave.getPrice())
         .currency(stockToSave.getCurrency())
-        .volume(BigInteger.valueOf(stockToSave.getVolume()))
+        .volume(stockToSave.getVolume())
         .stockTimestamp(localStockTimestamp)
         .build();
 
