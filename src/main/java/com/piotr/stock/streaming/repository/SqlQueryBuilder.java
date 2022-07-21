@@ -2,18 +2,22 @@ package com.piotr.stock.streaming.repository;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
 
-import com.piotr.stock.streaming.entity.StockEntity;
 import java.util.Map;
 
 public class SqlQueryBuilder {
 
+  private static final String SELECT = "SELECT * FROM";
+  private static final String WHERE = "WHERE";
+  private static final String AND = "AND";
+  private static final String LIMIT = "LIMIT";
+
   private final StringBuilder queryBuilder;
 
-  public SqlQueryBuilder() {
+  public SqlQueryBuilder(String ksqlTable) {
     queryBuilder = new StringBuilder()
-        .append("SELECT * FROM")
+        .append(SELECT)
         .append(SPACE)
-        .append(StockEntity.TABLE_NAME);
+        .append(ksqlTable.toUpperCase());
   }
 
   public SqlQueryBuilder withParameters(Map<String, String> filterParams) {
@@ -22,18 +26,19 @@ public class SqlQueryBuilder {
     }
 
     int paramIndex = 0;
-    for(String param: filterParams.keySet()) {
-      String clause = paramIndex == 0 ? "WHERE" : "AND";
+    for(var entry: filterParams.entrySet()) {
+      String clause = paramIndex == 0 ? WHERE : AND;
       queryBuilder
           .append(SPACE)
           .append(clause)
           .append(SPACE)
-          .append(param.toUpperCase())
+          .append(entry.getKey().toUpperCase())
           .append(SPACE)
           .append("=")
           .append(SPACE)
-          .append(":")
-          .append(param);
+          .append("'")
+          .append(entry.getValue())
+          .append("'");
       paramIndex++;
     }
     return this;
@@ -42,13 +47,15 @@ public class SqlQueryBuilder {
   public SqlQueryBuilder withLimit(int limit) {
     queryBuilder
         .append(SPACE)
-        .append("LIMIT")
+        .append(LIMIT)
         .append(SPACE)
         .append(limit);
     return this;
   }
 
   public String build() {
-    return queryBuilder.toString();
+    return queryBuilder
+        .append(";")
+        .toString();
   }
 }

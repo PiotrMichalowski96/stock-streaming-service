@@ -10,11 +10,12 @@ class SqlQueryBuilderTest {
   @Test
   void shouldCreateSqlQueryWithOneParam() {
     //given
+    String ksqlTable = "stock";
     Map<String, String> params = Map.of("ticker", "USD/EUR");
-    String expectedSql = "SELECT * FROM STOCK WHERE TICKER = :ticker";
+    String expectedSql = "SELECT * FROM STOCK WHERE TICKER = 'USD/EUR';";
 
     //when
-    String actualSql = new SqlQueryBuilder()
+    String actualSql = new SqlQueryBuilder(ksqlTable)
         .withParameters(params)
         .build();
 
@@ -25,15 +26,16 @@ class SqlQueryBuilderTest {
   @Test
   void shouldCreateSqlQueryWithTwoParams() {
     //given
+    String ksqlTable = "stock";
     Map<String, String> params = Map.of("ticker", "USD/EUR",
         "STOCK_TYPE", "Physical currency");
 
     //two expected SQL queries, because order of filter params does not matter
-    String expectedSql1 = "SELECT * FROM STOCK WHERE TICKER = :ticker AND STOCK_TYPE = :STOCK_TYPE";
-    String expectedSql2 = "SELECT * FROM STOCK WHERE STOCK_TYPE = :STOCK_TYPE AND TICKER = :ticker";
+    String expectedSql1 = "SELECT * FROM STOCK WHERE TICKER = 'USD/EUR' AND STOCK_TYPE = 'Physical currency';";
+    String expectedSql2 = "SELECT * FROM STOCK WHERE STOCK_TYPE = 'Physical currency' AND TICKER = 'USD/EUR';";
 
     //when
-    String actualSql = new SqlQueryBuilder()
+    String actualSql = new SqlQueryBuilder(ksqlTable)
         .withParameters(params)
         .build();
 
@@ -47,10 +49,11 @@ class SqlQueryBuilderTest {
   @Test
   void shouldCreateSqlQueryWithLimit() {
     //given
-    String expectedSql = "SELECT * FROM STOCK LIMIT 10";
+    String ksqlTable = "stock";
+    String expectedSql = "SELECT * FROM STOCK LIMIT 10;";
 
     //when
-    String actualSql = new SqlQueryBuilder()
+    String actualSql = new SqlQueryBuilder(ksqlTable)
         .withLimit(10)
         .build();
 
