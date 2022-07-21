@@ -12,14 +12,19 @@ class KafkaComponentUriBuilderTest {
     String topic = "myStockTopic";
     String server = "localhost:9092";
     String zookeeper = "localhost:2181";
-    String serializer = "kafka.serializer.StringEncoder";
-    String expectedKafkaUri = "kafka:myStockTopic?brokers=localhost:9092&zookeeperHost=localhost:2181&serializerClass=kafka.serializer.StringEncoder";
+    String stringSerializer = "kafka.serializer.StringEncoder";
+    String longSerializer = "kafka.serializer.LongEncoder";
+    String expectedKafkaUri = "kafka:myStockTopic?brokers=localhost:9092"
+        + "&zookeeperHost=localhost:2181"
+        + "&valueSerializer=kafka.serializer.StringEncoder"
+        + "&keySerializer=kafka.serializer.LongEncoder";
 
     //when
     String actualKafkaUri = new KafkaComponentUriBuilder(topic)
         .withBroker(server)
         .withZookeeperHost(zookeeper)
-        .withSerializerClass(serializer)
+        .withValueSerializer(stringSerializer)
+        .withKeySerializer(longSerializer)
         .build();
 
     //then

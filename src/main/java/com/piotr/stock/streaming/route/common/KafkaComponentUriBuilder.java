@@ -5,7 +5,8 @@ public class KafkaComponentUriBuilder {
   private static final String KAFKA_COMPONENT_URI_PREFIX = "kafka";
   private static final String BROKER_PARAM = "brokers";
   private static final String ZOOKEEPER_PARAM = "zookeeperHost";
-  private static final String SERIALIZER_PARAM = "serializerClass";
+  private static final String VALUE_SERIALIZER_PARAM = "valueSerializer";
+  private static final String KEY_SERIALIZER_PARAM = "keySerializer";
 
   private final StringBuilder kafkaUriBuilder;
   private boolean optionParamPresent;
@@ -28,8 +29,13 @@ public class KafkaComponentUriBuilder {
     return this;
   }
 
-  public KafkaComponentUriBuilder withSerializerClass(String serializerClass) {
-    addParameterInUri(SERIALIZER_PARAM, serializerClass);
+  public KafkaComponentUriBuilder withValueSerializer(String serializerClass) {
+    addParameterInUri(VALUE_SERIALIZER_PARAM, serializerClass);
+    return this;
+  }
+
+  public KafkaComponentUriBuilder withKeySerializer(String serializerClass) {
+    addParameterInUri(KEY_SERIALIZER_PARAM, serializerClass);
     return this;
   }
 
