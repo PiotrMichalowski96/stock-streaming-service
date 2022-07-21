@@ -3,7 +3,11 @@
 ############################################################
 kafka:
   server: 0.0.0.0:29092
-  topic: stock_topic
+  topic: stock_events
+  ksql:
+    host: 0.0.0.0
+    port: 8088
+    table: stock_table
 
 ############################################################
 # DB properties

@@ -61,6 +61,11 @@
       <artifactId>ksqldb-api-client</artifactId>
       <version>${ksqldb.version}</version>
     </dependency>
+    <dependency>
+      <groupId>io.confluent.ksql</groupId>
+      <artifactId>ksqldb-udf</artifactId>
+      <version>${ksqldb.version}</version>
+    </dependency>
 
     <!-- Other dependencies -->
     <dependency>
