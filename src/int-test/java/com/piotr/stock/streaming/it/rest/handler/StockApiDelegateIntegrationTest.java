@@ -14,6 +14,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Stream;
+import javax.annotation.PreDestroy;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ class StockApiDelegateIntegrationTest extends KsqlDbIntegrationTest {
     this.stockApiDelegate = stockApiDelegate;
   }
 
+  @PreDestroy
+  void close() {
+    closeProducer();
+    closeConsumer();
+  }
 
   @Test
   void shouldGetStockByQueryParams() {

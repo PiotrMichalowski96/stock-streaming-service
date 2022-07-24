@@ -32,14 +32,16 @@ public abstract class KsqlDbIntegrationTest {
               .withStartupTimeout(Duration.ofMinutes(2)))
           .withLocalCompose(true);
 
-  private final String bootstrap;
   private final String topic;
   private final MessageProducer<StockEntity> producer;
+  private final MessageConsumer<StockEntity> consumer;
 
   public KsqlDbIntegrationTest(String bootstrap, String topic) {
-    this.bootstrap = bootstrap;
     this.topic = topic;
     producer = new MessageProducer<>(bootstrap, new StockSerializer());
+    consumer = new MessageConsumer<>(bootstrap,
+        new StockDeserializer<>(StockEntity.class),
+        List.of(topic));
   }
 
   protected void sendStock(StockEntity stock) {
@@ -47,11 +49,14 @@ public abstract class KsqlDbIntegrationTest {
   }
 
   protected List<StockEntity> readStocks() {
-    MessageConsumer<StockEntity> consumer = new MessageConsumer<>(bootstrap,
-        new StockDeserializer<>(StockEntity.class),
-        List.of(topic));
-    List<StockEntity> stocks = consumer.readRecords();
+    return consumer.readRecords();
+  }
+
+  protected void closeProducer() {
+    producer.close();
+  }
+
+  protected void closeConsumer() {
     consumer.close();
-    return stocks;
   }
 }
