@@ -53,6 +53,7 @@ class KsqlTableInitializerTest {
           stockTimestamp VARCHAR
         ) WITH (
           KAFKA_TOPIC = 'stockTopic',
+          PARTITIONS = 1,
           VALUE_FORMAT= 'JSON',
           TIMESTAMP = 'stockTimestamp',
           TIMESTAMP_FORMAT = 'yyyy-MM-dd HH:mm:ss'
