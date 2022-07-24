@@ -1,0 +1,10 @@
+############################################################
+# Kafka properties
+############################################################
+kafka:
+  server: localhost:29092
+  topic: stock_events
+  ksql:
+    host: localhost
+    port: 8088
+    table: stock_table
