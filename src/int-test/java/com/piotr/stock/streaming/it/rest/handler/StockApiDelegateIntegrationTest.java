@@ -39,7 +39,6 @@ class StockApiDelegateIntegrationTest extends KsqlDbIntegrationTest {
   @PreDestroy
   void close() {
     closeProducer();
-    closeConsumer();
   }
 
   @Test

@@ -21,27 +21,30 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public abstract class KsqlDbIntegrationTest {
 
   private static final File KSQLDB_COMPOSE_FILE = new File("src/int-test/resources/docker/docker-compose.yaml");
+  private static final String ZOOKEEPER_SERVICE = "zookeeper";
+  private static final String KSQLDB_CLI_SERVICE = "ksqldb-cli";
+
+  public static final String BROKER_SERVICE = "broker";
+  public static final String KSQLDB_SERVICE = "ksqldb-server";
 
   @Container
   public static DockerComposeContainer<?> dockerComposeContainer =
       new DockerComposeContainer<>(KSQLDB_COMPOSE_FILE)
-          .withServices("zookeeper", "broker", "ksqldb-server", "ksqldb-cli")
-          .withExposedService("broker", 29092, Wait.forListeningPort()
+          .withServices(ZOOKEEPER_SERVICE, BROKER_SERVICE, KSQLDB_SERVICE, KSQLDB_CLI_SERVICE)
+          .withExposedService(BROKER_SERVICE, 29092, Wait.forListeningPort()
               .withStartupTimeout(Duration.ofMinutes(2)))
-          .withExposedService("ksqldb-server", 8088, Wait.forHealthcheck()
+          .withExposedService(KSQLDB_SERVICE, 8088, Wait.forHealthcheck()
               .withStartupTimeout(Duration.ofMinutes(2)))
           .withLocalCompose(true);
 
   private final String topic;
+  private final String bootstrap;
   private final MessageProducer<StockEntity> producer;
-  private final MessageConsumer<StockEntity> consumer;
 
   public KsqlDbIntegrationTest(String bootstrap, String topic) {
+    this.bootstrap = bootstrap;
     this.topic = topic;
     producer = new MessageProducer<>(bootstrap, new StockSerializer());
-    consumer = new MessageConsumer<>(bootstrap,
-        new StockDeserializer<>(StockEntity.class),
-        List.of(topic));
   }
 
   protected void sendStock(StockEntity stock) {
@@ -49,14 +52,15 @@ public abstract class KsqlDbIntegrationTest {
   }
 
   protected List<StockEntity> readStocks() {
-    return consumer.readRecords();
+    MessageConsumer<StockEntity> consumer = new MessageConsumer<>(bootstrap,
+        new StockDeserializer<>(StockEntity.class),
+        List.of(topic));
+    List<StockEntity> stocks = consumer.readRecords();
+    consumer.close();
+    return stocks;
   }
 
   protected void closeProducer() {
     producer.close();
-  }
-
-  protected void closeConsumer() {
-    consumer.close();
   }
 }
