@@ -28,6 +28,7 @@
     <project.lombok.version>1.18.24</project.lombok.version>
     <testcontainers.version>1.17.3</testcontainers.version>
     <cucumber.version>7.4.1</cucumber.version>
+    <rest-assured.version>5.1.1</rest-assured.version>
     <awaitility.version>4.2.0</awaitility.version>
   </properties>
 
@@ -116,14 +117,14 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-java</artifactId>
-      <version>${cucumber.version}</version>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>${awaitility.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-junit</artifactId>
+      <artifactId>cucumber-java</artifactId>
       <version>${cucumber.version}</version>
       <scope>test</scope>
     </dependency>
@@ -134,10 +135,33 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.awaitility</groupId>
-      <artifactId>awaitility</artifactId>
-      <version>${awaitility.version}</version>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit-platform-engine</artifactId>
+      <version>${cucumber.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>${rest-assured.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency> <!-- fix error about mismatch with groovy versions -->
+      <groupId>io.rest-assured</groupId>
+      <artifactId>xml-path</artifactId>
+      <version>${rest-assured.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.groovy</groupId>
+          <artifactId>groovy-xml</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 

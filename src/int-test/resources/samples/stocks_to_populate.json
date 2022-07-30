@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "ticker": "BTC/EUR",
+    "stockType": "Digital Currency",
+    "exchange": "Binance",
+    "price": 19695.0000,
+    "currency": "EUR",
+    "volume": 66110,
+    "stockTimestamp": "2022-07-11 22:52:48"
+  },
+  {
+    "id": 2,
+    "ticker": "IXIC",
+    "stockType": "Index",
+    "exchange": "NASDAQ",
+    "price": 13688.2490,
+    "currency": "USD",
+    "volume": 501,
+    "stockTimestamp": "2022-02-17 22:23:32"
+  }
+]
