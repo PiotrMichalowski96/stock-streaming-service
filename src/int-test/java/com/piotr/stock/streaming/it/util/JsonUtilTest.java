@@ -38,7 +38,7 @@ class JsonUtilTest {
   @Test
   void shouldConvertJsonArrayWithOneElement() throws IOException {
     //given
-    String jsonArrayPath = "samples/stock_1.json";
+    String jsonArrayPath = "samples/stock_2.json";
 
     //when
     List<Stock> stocks = JsonUtil.readJsonArrayFile(jsonArrayPath, Stock.class);

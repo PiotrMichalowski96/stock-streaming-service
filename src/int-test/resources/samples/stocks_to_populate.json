@@ -18,5 +18,97 @@
     "currency": "USD",
     "volume": 501,
     "stockTimestamp": "2022-02-17 22:23:32"
+  },
+  {
+    "id": 3,
+    "ticker": "BTC/EUR",
+    "stockType": "Digital Currency",
+    "exchange": "NASDAQ",
+    "price": 19775.0000,
+    "currency": "EUR",
+    "volume": 1246,
+    "stockTimestamp": "2022-07-11 22:11:48"
+  },
+  {
+    "id": 4,
+    "ticker": "USD/JPY",
+    "stockType": "Physical Currency",
+    "exchange": "NASDAQ",
+    "price": 114.829,
+    "currency": "Japanese Yen",
+    "volume": 912,
+    "stockTimestamp": "2022-07-11 22:22:32"
+  },
+  {
+    "id": 5,
+    "ticker": "EUR/USD",
+    "stockType": "Physical Currency",
+    "exchange": "WWA",
+    "price": 1.1099,
+    "currency": "US Dollar",
+    "volume": 915,
+    "stockTimestamp": "2022-07-11 22:22:32"
+  }
+,
+  {
+    "id": 6,
+    "ticker": "EUR/USD",
+    "stockType": "Physical Currency",
+    "exchange": "WWA",
+    "price": 1.1132,
+    "currency": "US Dollar",
+    "volume": 987,
+    "stockTimestamp": "2022-07-11 22:29:32"
+  }
+,
+  {
+    "id": 7,
+    "ticker": "EUR/USD",
+    "stockType": "Physical Currency",
+    "exchange": "WWA",
+    "price": 1.1119,
+    "currency": "US Dollar",
+    "volume": 995,
+    "stockTimestamp": "2022-07-11 22:30:32"
+  },
+  {
+    "id": 8,
+    "ticker": "EUR/USD",
+    "stockType": "Physical Currency",
+    "exchange": "WWA",
+    "price": 1.1122,
+    "currency": "US Dollar",
+    "volume": 980,
+    "stockTimestamp": "2022-07-11 22:31:32"
+  },
+  {
+    "id": 9,
+    "ticker": "EUR/USD",
+    "stockType": "Physical Currency",
+    "exchange": "WWA",
+    "price": 1.1261,
+    "currency": "US Dollar",
+    "volume": 976,
+    "stockTimestamp": "2022-07-11 22:32:32"
+  },
+  {
+    "id": 10,
+    "ticker": "EUR/USD",
+    "stockType": "Physical Currency",
+    "exchange": "WWA",
+    "price": 1.1243,
+    "currency": "US Dollar",
+    "volume": 981,
+    "stockTimestamp": "2022-07-11 22:33:32"
+  },
+  {
+    "id": 11,
+    "ticker": "EUR/USD",
+    "stockType": "Physical Currency",
+    "exchange": "WWA",
+    "price": 1.1101,
+    "currency": "US Dollar",
+    "volume": 999,
+    "stockTimestamp": "2022-07-11 22:34:32"
   }
 ]

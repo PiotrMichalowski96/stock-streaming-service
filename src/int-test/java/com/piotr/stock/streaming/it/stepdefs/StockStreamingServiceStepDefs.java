@@ -68,6 +68,23 @@ public class StockStreamingServiceStepDefs extends KsqlDbIntegrationTest {
         .get("/stock");
   }
 
+  @When("user sends request to get stock with a ticker {string}, stockType {string} and exchange {string}")
+  public void sendGetRequest(String ticker, String stockType, String exchange) {
+    response = given()
+        .queryParam("ticker", ticker)
+        .queryParam("stockType", stockType)
+        .queryParam("exchange", exchange)
+        .when()
+        .get("/stock");
+  }
+
+  @When("user sends request to get stock without filters")
+  public void sendGetRequest() {
+    response = given()
+        .when()
+        .get("/stock");
+  }
+
   @Then("stock service return response with status {int}")
   public void serviceReturnResponse(Integer expectedStatus) {
     assertThat(response.getStatusCode()).isEqualTo(expectedStatus);

@@ -24,9 +24,8 @@ public abstract class KsqlDbIntegrationTest {
   private static final File KSQLDB_COMPOSE_FILE = new File("src/int-test/resources/docker/docker-compose.yaml");
   private static final String ZOOKEEPER_SERVICE = "zookeeper";
   private static final String KSQLDB_CLI_SERVICE = "ksqldb-cli";
-
-  public static final String BROKER_SERVICE = "broker";
-  public static final String KSQLDB_SERVICE = "ksqldb-server";
+  private static final String BROKER_SERVICE = "broker";
+  private static final String KSQLDB_SERVICE = "ksqldb-server";
 
   @Container
   public static DockerComposeContainer<?> dockerComposeContainer =
