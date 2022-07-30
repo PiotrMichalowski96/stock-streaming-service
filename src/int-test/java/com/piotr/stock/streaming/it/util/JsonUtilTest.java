@@ -31,7 +31,7 @@ class JsonUtilTest {
     List<StockEntity> stocks = JsonUtil.readJsonArrayFile(jsonArrayPath, StockEntity.class);
 
     //then
-    assertThat(stocks).hasSize(2);
+    assertThat(stocks).hasSize(11);
     stocks.forEach(stock -> assertThat(stock).isNotNull());
   }
 
