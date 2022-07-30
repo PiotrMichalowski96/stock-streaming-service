@@ -6,6 +6,7 @@ import static com.piotr.stock.streaming.it.util.JsonUtil.readJsonArrayFile;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.piotr.stock.streaming.entity.StockEntity;
 import com.piotr.stock.streaming.it.common.KsqlDbIntegrationTest;
 import com.piotr.stock.streaming.it.config.DockerContextInitializer;
@@ -60,7 +61,7 @@ public class StockStreamingServiceStepDefs extends KsqlDbIntegrationTest {
     callUntil(this::readStocks, stocks -> !stocks.isEmpty());
   }
 
-  @When("user sends request to get stock with a ticker {string}")
+  @When("user sends request to get stocks with a ticker {string}")
   public void sendGetRequest(String ticker) {
     response = given()
         .queryParam("ticker", ticker)
@@ -68,7 +69,7 @@ public class StockStreamingServiceStepDefs extends KsqlDbIntegrationTest {
         .get("/stock");
   }
 
-  @When("user sends request to get stock with a ticker {string}, stockType {string} and exchange {string}")
+  @When("user sends request to get stocks with a ticker {string}, stockType {string} and exchange {string}")
   public void sendGetRequest(String ticker, String stockType, String exchange) {
     response = given()
         .queryParam("ticker", ticker)
@@ -78,7 +79,7 @@ public class StockStreamingServiceStepDefs extends KsqlDbIntegrationTest {
         .get("/stock");
   }
 
-  @When("user sends request to get stock without filters")
+  @When("user sends request to get stocks without filters")
   public void sendGetRequest() {
     response = given()
         .when()
@@ -90,12 +91,19 @@ public class StockStreamingServiceStepDefs extends KsqlDbIntegrationTest {
     assertThat(response.getStatusCode()).isEqualTo(expectedStatus);
   }
 
-  @Then("returned stock is equal to expected {string}")
+  @Then("returned stocks are equal to expected {string}")
   public void stockIsEqualToExpected(String expectedStockPath) throws IOException {
     List<Stock> expectedStocks = readJsonArrayFile(expectedStockPath, Stock.class);
     String stocksJson = response.getBody().asString();
     List<Stock> actualStocks = convertJsonArray(stocksJson, Stock.class);
     assertThat(actualStocks).hasSameSizeAs(expectedStocks);
     assertThat(actualStocks).hasSameElementsAs(expectedStocks);
+  }
+
+  @Then("returned {int} stocks")
+  public void stockIsEqualToExpected(Integer stockListSize) throws JsonProcessingException {
+    String stocksJson = response.getBody().asString();
+    List<Stock> actualStocks = convertJsonArray(stocksJson, Stock.class);
+    assertThat(actualStocks).hasSize(stockListSize);
   }
 }
