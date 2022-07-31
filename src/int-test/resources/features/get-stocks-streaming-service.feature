@@ -7,9 +7,9 @@ Feature: Testing a stock streaming REST API with Kafka. Users should be able to 
     Then stock service return response with status <ResponseStatus>
     And returned stocks are equal to expected <ExpectedStock>
     Examples:
-      | Ticker    | ResponseStatus | ExpectedStock          |
-      | "BTC/EUR" | 200            | "samples/stock_1.json" |
-      | "IXIC"    | 200            | "samples/stock_2.json" |
+      | Ticker    | ResponseStatus | ExpectedStock                     |
+      | "BTC/EUR" | 200            | "samples/scenario_1/stock_1.json" |
+      | "IXIC"    | 200            | "samples/scenario_1/stock_2.json" |
 
   Scenario Outline: Get correct stocks from KSQL database using all filters
     Given stocks are present in Kafka topic
@@ -17,9 +17,9 @@ Feature: Testing a stock streaming REST API with Kafka. Users should be able to 
     Then stock service return response with status <ResponseStatus>
     And returned stocks are equal to expected <ExpectedStock>
     Examples:
-      | Ticker    | StockType           | Exchange | ResponseStatus | ExpectedStock          |
-      | "BTC/EUR" | "Digital Currency"  | "NASDAQ" | 200            | "samples/stock_3.json" |
-      | "USD/JPY" | "Physical Currency" | "NASDAQ" | 200            | "samples/stock_4.json" |
+      | Ticker    | StockType           | Exchange | ResponseStatus | ExpectedStock                     |
+      | "BTC/EUR" | "Digital Currency"  | "NASDAQ" | 200            | "samples/scenario_1/stock_3.json" |
+      | "USD/JPY" | "Physical Currency" | "NASDAQ" | 200            | "samples/scenario_1/stock_4.json" |
 
   Scenario Outline: Get stock list from KSQL database without any filters
     Given stocks are present in Kafka topic

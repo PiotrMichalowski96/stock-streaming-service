@@ -13,7 +13,7 @@ class JsonUtilTest {
   @Test
   void shouldConvertJson() throws IOException {
     //given
-    String jsonPath = "samples/saved_stock.json";
+    String jsonPath = "samples/scenario_2/stock_to_save_1.json";
 
     //when
     StockEntity stock = JsonUtil.readJsonFile(jsonPath, StockEntity.class);
@@ -25,7 +25,7 @@ class JsonUtilTest {
   @Test
   void shouldConvertJsonArrayWithManyElements() throws IOException {
     //given
-    String jsonArrayPath = "samples/stocks_to_populate.json";
+    String jsonArrayPath = "samples/scenario_1/stocks_to_populate.json";
 
     //when
     List<StockEntity> stocks = JsonUtil.readJsonArrayFile(jsonArrayPath, StockEntity.class);
@@ -38,7 +38,7 @@ class JsonUtilTest {
   @Test
   void shouldConvertJsonArrayWithOneElement() throws IOException {
     //given
-    String jsonArrayPath = "samples/stock_2.json";
+    String jsonArrayPath = "samples/scenario_1/stock_2.json";
 
     //when
     List<Stock> stocks = JsonUtil.readJsonArrayFile(jsonArrayPath, Stock.class);
