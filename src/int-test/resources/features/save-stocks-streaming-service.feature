@@ -9,3 +9,10 @@ Feature: Testing a stock streaming REST API with Kafka. Users should be able to 
     Examples:
       | StockToSave                               | StockDto                              | ResponseStatus |
       | "samples/scenario_2/stock_to_save_1.json" | "samples/scenario_2/stock_dto_1.json" | 200            |
+
+  Scenario Outline: Send wrong format stock
+    When user sends request to put stock <StockDto> to Kafka topic
+    Then stock service return response with status <ResponseStatus>
+    Examples:
+      | StockDto                                   | ResponseStatus |
+      | "samples/scenario_2/stock_broken_dto.json" | 400            |
