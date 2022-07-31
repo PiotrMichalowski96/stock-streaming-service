@@ -77,6 +77,12 @@ paths:
 definitions:
   Stock:
     type: "object"
+    required:
+      - "ticker"
+      - "quoteType"
+      - "stockMarket"
+      - "price"
+      - "currency"
     properties:
       ticker:
         type: "string"

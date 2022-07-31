@@ -1,0 +1,11 @@
+[
+  {
+    "ticker": "USD/JPY",
+    "quoteType": "Physical Currency",
+    "stockMarket": "NASDAQ",
+    "price": 114.829,
+    "currency": "Japanese Yen",
+    "volume": 912,
+    "stockTimestamp": "2022-07-11T22:22:32+02:00"
+  }
+]

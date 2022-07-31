@@ -1,0 +1,11 @@
+[
+  {
+    "ticker": "IXIC",
+    "quoteType": "Index",
+    "stockMarket": "NASDAQ",
+    "price": 13688.249,
+    "currency": "USD",
+    "volume": 501,
+    "stockTimestamp": "2022-02-17T23:23:32+02:00"
+  }
+]

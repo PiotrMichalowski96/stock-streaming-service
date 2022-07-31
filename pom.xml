@@ -26,6 +26,10 @@
     <mapstruct.verstion>1.5.1.Final</mapstruct.verstion>
     <springdoc.version>1.6.9</springdoc.version>
     <project.lombok.version>1.18.24</project.lombok.version>
+    <testcontainers.version>1.17.3</testcontainers.version>
+    <cucumber.version>7.4.1</cucumber.version>
+    <rest-assured.version>5.1.1</rest-assured.version>
+    <awaitility.version>4.2.0</awaitility.version>
   </properties>
 
   <dependencies>
@@ -65,6 +69,11 @@
 
     <!-- Other dependencies -->
     <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-streams</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-ui</artifactId>
       <version>${springdoc.version}</version>
@@ -92,6 +101,67 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+
+    <!-- Integration tests -->
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>${awaitility.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-spring</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit-platform-engine</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>${rest-assured.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency> <!-- fix error about mismatch with groovy versions -->
+      <groupId>io.rest-assured</groupId>
+      <artifactId>xml-path</artifactId>
+      <version>${rest-assured.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.groovy</groupId>
+          <artifactId>groovy-xml</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 
@@ -128,6 +198,40 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>add-integration-test-sources</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/int-test/java</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <useFile>false</useFile>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/*IntegrationTest.java</exclude>
+          </excludes>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -175,6 +279,67 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>integration-tests</id>
+      <build>
+        <defaultGoal>clean install</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>2.22.2</version>
+            <configuration>
+              <skip>false</skip>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+                <configuration>
+                  <argLine>-Dspring.profiles.active=INT-TEST</argLine>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.22.2</version>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>net.masterthought</groupId>
+            <artifactId>maven-cucumber-reporting</artifactId>
+            <version>5.7.0</version>
+            <executions>
+              <execution>
+                <id>execution</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+                <configuration>
+                  <projectName>cucumber-jvm-example</projectName>
+                  <skip>false</skip>
+                  <outputDirectory>${project.build.directory}/test-reports</outputDirectory>
+                  <inputDirectory>${project.build.directory}/test-reports</inputDirectory>
+                  <jsonFiles>
+                    <jsonFile>cucumber-json-report.json</jsonFile>
+                  </jsonFiles>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <repositories>
     <repository>

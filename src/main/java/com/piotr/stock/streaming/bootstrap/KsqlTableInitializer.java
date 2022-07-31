@@ -26,6 +26,7 @@ public class KsqlTableInitializer implements CommandLineRunner {
           stockTimestamp VARCHAR
         ) WITH (
           KAFKA_TOPIC = '%s',
+          PARTITIONS = 1,
           VALUE_FORMAT= 'JSON',
           TIMESTAMP = 'stockTimestamp',
           TIMESTAMP_FORMAT = 'yyyy-MM-dd HH:mm:ss'

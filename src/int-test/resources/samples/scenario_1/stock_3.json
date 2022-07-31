@@ -1,0 +1,11 @@
+[
+  {
+    "ticker": "BTC/EUR",
+    "quoteType": "Digital Currency",
+    "stockMarket": "NASDAQ",
+    "price": 19775.0,
+    "currency": "EUR",
+    "volume": 1246,
+    "stockTimestamp": "2022-07-11T22:11:48+02:00"
+  }
+]
