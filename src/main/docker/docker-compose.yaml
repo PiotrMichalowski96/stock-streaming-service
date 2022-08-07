@@ -52,3 +52,17 @@ services:
       - ksqldb-server
     entrypoint: /bin/sh
     tty: true
+
+  stock-streaming-app:
+    image: piotr/stock-streaming-service:latest
+    hostname: stock-streaming-app
+    container_name: stock-streaming-app
+    depends_on:
+      - broker
+      - ksqldb-server
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_SERVER: broker:9092
+      KAFKA_KSQL_HOST: ksqldb-server
+      KAFKA_KSQL_PORT: 8088
