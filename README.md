@@ -1,4 +1,6 @@
 # Stock streaming service
+[![<PiotrMichalowski96>](https://circleci.com/gh/PiotrMichalowski96/stock-streaming-service.svg?style=svg)](https://circleci.com/gh/PiotrMichalowski96/stock-streaming-service)
+
 Stock REST API using stream processing with Apache Kafka and KSQL database. 
 ## Table of contents
 * [Overview](#Overview)
