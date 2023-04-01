@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class StockResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(value = { IllegalArgumentException.class, IllegalStateException.class })
-  protected ResponseEntity<?> handleBadRequest(RuntimeException ex, WebRequest request) {
+  protected ResponseEntity<Object> handleBadRequest(RuntimeException ex, WebRequest request) {
     String bodyOfResponse = "Wrong arguments for Stock API";
     return handleExceptionInternal(ex,
         bodyOfResponse,

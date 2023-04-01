@@ -51,6 +51,7 @@ public class KsqlTableInitializer implements CommandLineRunner {
       logger.info("Create KSQL DB table result: {}", result.queryId().orElse(null));
     } catch (ExecutionException | InterruptedException e) {
       logger.error("Error while creating KSQL DB table: ", e);
+      Thread.currentThread().interrupt();
     }
   }
 }

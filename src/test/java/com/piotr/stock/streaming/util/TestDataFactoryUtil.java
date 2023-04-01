@@ -2,7 +2,7 @@ package com.piotr.stock.streaming.util;
 
 import static com.piotr.stock.streaming.entity.StockEntity.CURRENCY_COLUMN;
 import static com.piotr.stock.streaming.entity.StockEntity.EXCHANGE_COLUMN;
-import static com.piotr.stock.streaming.entity.StockEntity.ID;
+import static com.piotr.stock.streaming.entity.StockEntity.STOCK_ID;
 import static com.piotr.stock.streaming.entity.StockEntity.PRICE_COLUMN;
 import static com.piotr.stock.streaming.entity.StockEntity.STOCK_TIMESTAMP_COLUMN;
 import static com.piotr.stock.streaming.entity.StockEntity.STOCK_TYPE_COLUMN;
@@ -55,7 +55,7 @@ public class TestDataFactoryUtil {
 
   public static Row createKsqlDbRow(Long id, String stockTimestamp) {
 
-    List<String> columnNames = List.of(ID,
+    List<String> columnNames = List.of(STOCK_ID,
         TICKER_COLUMN,
         STOCK_TYPE_COLUMN,
         EXCHANGE_COLUMN,
