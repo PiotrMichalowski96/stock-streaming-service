@@ -1,6 +1,11 @@
 # Stock streaming service
 [![<PiotrMichalowski96>](https://circleci.com/gh/PiotrMichalowski96/stock-streaming-service.svg?style=svg)](https://circleci.com/gh/PiotrMichalowski96/stock-streaming-service)
 
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/dashboard?id=PiotrMichalowski96_stock-streaming-service)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=PiotrMichalowski96_stock-streaming-service&metric=bugs)](https://sonarcloud.io/dashboard?id=PiotrMichalowski96_stock-streaming-service)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=PiotrMichalowski96_stock-streaming-service&metric=coverage)](https://sonarcloud.io/dashboard?id=PiotrMichalowski96_stock-streaming-service)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=PiotrMichalowski96_stock-streaming-service&metric=ncloc)](https://sonarcloud.io/dashboard?id=PiotrMichalowski96_stock-streaming-service)
+
 Stock REST API using stream processing with Apache Kafka and KSQL database. 
 ## Table of contents
 * [Overview](#Overview)
