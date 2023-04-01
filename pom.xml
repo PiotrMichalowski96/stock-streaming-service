@@ -32,7 +32,7 @@
     <awaitility.version>4.2.0</awaitility.version>
     <docker.image.prefix>piotr</docker.image.prefix>
     <docker.image.name>${project.artifactId}</docker.image.name>
-    <sonar.projectKey>PiotrMichalowski96_bet-microservices</sonar.projectKey>
+    <sonar.projectKey>PiotrMichalowski96_stock-streaming-service</sonar.projectKey>
     <sonar.organization>piotrmichalowski96</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
