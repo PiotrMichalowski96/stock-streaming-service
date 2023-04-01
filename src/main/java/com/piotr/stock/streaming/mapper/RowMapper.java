@@ -2,7 +2,7 @@ package com.piotr.stock.streaming.mapper;
 
 import static com.piotr.stock.streaming.entity.StockEntity.CURRENCY_COLUMN;
 import static com.piotr.stock.streaming.entity.StockEntity.EXCHANGE_COLUMN;
-import static com.piotr.stock.streaming.entity.StockEntity.ID;
+import static com.piotr.stock.streaming.entity.StockEntity.STOCK_ID;
 import static com.piotr.stock.streaming.entity.StockEntity.PRICE_COLUMN;
 import static com.piotr.stock.streaming.entity.StockEntity.STOCK_TIMESTAMP_COLUMN;
 import static com.piotr.stock.streaming.entity.StockEntity.STOCK_TYPE_COLUMN;
@@ -22,7 +22,7 @@ public class RowMapper {
 
   public StockEntity mapRowToStockEntity(Row row) {
     return StockEntity.builder()
-        .id(row.getLong(ID))
+        .id(row.getLong(STOCK_ID))
         .ticker(row.getString(TICKER_COLUMN))
         .stockType(row.getString(STOCK_TYPE_COLUMN))
         .exchange(row.getString(EXCHANGE_COLUMN))

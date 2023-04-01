@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StockEntity {
 
-  public static final String ID = "ID";
+  public static final String STOCK_ID = "ID";
   public static final String TICKER_COLUMN = "TICKER";
   public static final String STOCK_TYPE_COLUMN = "STOCKTYPE";
   public static final String EXCHANGE_COLUMN = "EXCHANGE";
