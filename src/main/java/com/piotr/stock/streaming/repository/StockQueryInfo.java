@@ -7,13 +7,13 @@ import static com.piotr.stock.streaming.entity.StockEntity.TICKER_COLUMN;
 import com.piotr.stock.streaming.model.ApiRequestParams;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Getter;
 import lombok.NonNull;
+import lombok.Value;
 
-@Getter
+@Value
 public class StockQueryInfo {
 
-  private final Map<String, String> queryParams;
+  Map<String, String> queryParams;
 
   public StockQueryInfo(@NonNull ApiRequestParams apiRequestParams) {
     queryParams = new HashMap<>();

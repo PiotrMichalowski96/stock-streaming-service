@@ -8,6 +8,8 @@ import com.piotr.stock.streaming.route.SaveStockApiRoute;
 import com.piotr.stock.streaming.route.caller.RetrieveStockRouteCaller;
 import com.piotr.stock.streaming.route.caller.SaveStockRouteCaller;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Produce;
 import org.springframework.http.HttpStatus;
@@ -16,13 +18,15 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@NoArgsConstructor
+@AllArgsConstructor
 public class StockApiDelegateImpl implements StockApiDelegate {
 
   @Produce(RetrieveStockApiRoute.ROUTE_FROM)
-  protected RetrieveStockRouteCaller retrieveStockRouteCaller;
+  private RetrieveStockRouteCaller retrieveStockRouteCaller;
 
   @Produce(SaveStockApiRoute.ROUTE_FROM)
-  protected SaveStockRouteCaller saveStockRouteCaller;
+  private SaveStockRouteCaller saveStockRouteCaller;
 
   @Override
   public ResponseEntity<Stock> addStock(Stock body) {
