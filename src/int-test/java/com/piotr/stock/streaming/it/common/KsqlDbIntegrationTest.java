@@ -32,10 +32,11 @@ public abstract class KsqlDbIntegrationTest {
       new DockerComposeContainer<>(KSQLDB_COMPOSE_FILE)
           .withServices(ZOOKEEPER_SERVICE, BROKER_SERVICE, KSQLDB_SERVICE, KSQLDB_CLI_SERVICE)
           .withExposedService(BROKER_SERVICE, 29092, Wait.forListeningPort()
-              .withStartupTimeout(Duration.ofMinutes(2)))
+              .withStartupTimeout(Duration.ofMinutes(5)))
           .withExposedService(KSQLDB_SERVICE, 8088, Wait.forHealthcheck()
-              .withStartupTimeout(Duration.ofMinutes(2)))
-          .withLocalCompose(true);
+              .withStartupTimeout(Duration.ofMinutes(5)))
+          .withLocalCompose(true)
+          .withOptions("--compatibility");
 
   private final String topic;
   private final String bootstrap;
